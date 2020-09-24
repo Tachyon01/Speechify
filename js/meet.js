@@ -29,8 +29,10 @@ var docObserver = new MutationObserver(function (mutations, me) {
 
         for (let newCCItem of newWordItems) {
             if (compareItems.includes(newCCItem) && !currentWordItems.includes(newCCItem)) {
-                chrome.extension.sendMessage({ platform: 'Google Meet', item: newCCItem }, function(response) { });
-                currentWordItems.push(newCCItem);
+                setTimeout(function(){ 
+                    chrome.extension.sendMessage({ platform: 'Google Meet', item: newCCItem }, function(response) { });
+                    currentWordItems.push(newCCItem);    
+                 }, 1000);
             }
         }
     }
