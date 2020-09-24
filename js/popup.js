@@ -19,17 +19,14 @@ document.getElementById('submit-input').addEventListener('keydown', function(eve
 function generateList() {
     chrome.storage.sync.get(['WordItems'], function(result) {
         wordItems = result.WordItems;
-//         console.log(wordItems);
-        wordItems.forEach((item)=>addItemToList(item))
-        // for (let wordItem in wordItems) {
-        //     addItemToList(wordItem);
-        //     console.log(wordItem);
-        // }      
+        
+        if (wordItems)
+            for (let wordItem of wordItems)
+                addItemToList(wordItem);
     });
 };
 
 function addItemToList(wordItem) {
-    // console.log(wordItem);
     let liNode = document.createElement('li');
     liNode.setAttribute('class', 'hvr-sweep-to-right');
 
@@ -86,9 +83,10 @@ function removeItemFromList(wordItemContent) {
 }
 
 function addWordItem(wordItemContent) {
-    for (let wordItem in wordItems)
-        if (wordItem.content === wordItemContent)
-            return;
+    if (wordItems)
+        for (let wordItem of wordItems)
+            if (wordItem.content === wordItemContent)
+                return;
 
     let newWordItem = {state: '', content: wordItemContent};
 
